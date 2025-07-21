@@ -66,7 +66,7 @@ resource "aws_apigatewayv2_integration" "flask_integration" {
   api_id             = aws_apigatewayv2_api.flask_api.id
   integration_type   = "HTTP_PROXY"
   integration_method = "ANY"
-  integration_uri    = "http://${aws_instance.flask_server.public_ip}" # 🚨 cuidado: só funciona depois da EC2 criada
+  integration_uri    = "http://${aws_instance.flask_server.public_ip}/{proxy}"
 
   timeout_milliseconds = 30000
 }
