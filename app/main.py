@@ -25,4 +25,5 @@ def erro():
     return make_response("Erro intencional", 500)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80)
+    app.run(host="0.0.0.0", port=5000)
+
