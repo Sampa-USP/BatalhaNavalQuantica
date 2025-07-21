@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 # EC2 Instance
-# user_data = file("${path.module}/user_data.sh")
+# user_data_base64 = base64encode(file("${path.module}/user_data.sh"))
 resource "aws_instance" "flask_server" {
   ami           = var.ami_id
   instance_type = var.instance_type
@@ -11,8 +11,7 @@ resource "aws_instance" "flask_server" {
   
   associate_public_ip_address = true
   subnet_id = var.subnet_id
-
-  user_data_base64 = base64encode(file("${path.module}/user_data.sh"))
+  user_data = file("${path.module}/user_data.sh")
 
   vpc_security_group_ids = [aws_security_group.allow_http.id]
 
