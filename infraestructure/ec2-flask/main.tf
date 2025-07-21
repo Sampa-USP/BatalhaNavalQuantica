@@ -74,7 +74,7 @@ resource "aws_apigatewayv2_integration" "flask_integration" {
 # Route ANY / (com CORS)
 resource "aws_apigatewayv2_route" "flask_route" {
   api_id    = aws_apigatewayv2_api.flask_api.id
-  route_key = "ANY /"
+  route_key = "ANY /{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.flask_integration.id}"
 }
 
