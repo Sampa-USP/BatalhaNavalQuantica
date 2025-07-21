@@ -21,3 +21,9 @@ variable "key_name" {
   description = "Chave SSH EC2"
   default     = "minha-chave-aws"
 }
+
+variable "subnet_id" {
+  type        = string
+  description = "Subnet ID"
+  default     = "subnet-02ae3d5cb2e409a08"
+}
