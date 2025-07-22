@@ -34,3 +34,5 @@ AWSCLIV2.pkg
 
 # Opção: outputs de debug
 outputs.tf.json
+
+.venv/
