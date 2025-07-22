@@ -1,6 +1,8 @@
 // === CONFIGURAÇÃO INICIAL ===
-//const URL_BASE = "http://localhost:5000";
-const URL_BASE = "https://pasv1jt1ca.execute-api.us-east-1.amazonaws.com/prod";
+// const URL_BASE = "http://localhost:4587";
+// const URL_BASE = "https://pasv1jt1ca.execute-api.us-east-1.amazonaws.com/prod";
+const URL_BASE = "https://a9k3tn8ng7.execute-api.us-east-1.amazonaws.com/";
+
 let backendSelecionado = null;
 
 let canvasJogador, canvasComputador, contextoJogador, contextoComputador;
