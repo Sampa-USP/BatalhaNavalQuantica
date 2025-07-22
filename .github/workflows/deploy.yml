@@ -5,6 +5,13 @@ on:
     branches:
       - backend_serverful
 
+  workflow_dispatch:
+    inputs:
+      ambiente:
+        description: 'Escolha o ambiente de deploy'
+        required: true
+        default: 'produção'
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
