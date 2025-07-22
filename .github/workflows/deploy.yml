@@ -29,7 +29,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            rm -rf ~/app
+            sudo rm -rf ~/app
             mv ~/app-temp ~/app
             cd ~/app
             docker stop flask-app || true
