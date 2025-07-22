@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batalha Naval Quântica</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+
+  <style>
+    /* Container da área de hover (região triangular) */
+    .hover-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100px;   /* Área maior */
+      height: 100px;
+      overflow: visible; /* Permite que o conteúdo ultrapasse os limites */
+      z-index: 1000;
+    }
+    /* Região triangular que ativa a exibição das referências com background purple */
+    .hover-trigger {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      background-color: gray; /* Background purple */
+      clip-path: polygon(0 0, 100% 0, 0 100%);
+      cursor: pointer;
+    }
+    /* Texto exibido na diagonal dentro do triângulo */
+    .hover-text {
+      position: absolute;
+      top: 40%;
+      left: 40%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      font-size: 16px;
+      color: #fff;
+      white-space: nowrap;
+    }
+    /* Seção de referências (inicialmente oculta) */
+    .references {
+      position: absolute;
+      top: 0; /* Ajuste conforme desejado para posicionamento final */
+      left: 0;
+      display: flex;
+      gap: 10px;             /* Espaço entre os artigos */
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.9); /* Fundo com leve transparência */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);     /* Sombra */
+      border-radius: 5px;      /* Bordas arredondadas */
+      opacity: 0;              /* Inicia invisível */
+      transform: translate(-10px, -10px); /* Pequeno deslocamento inicial */
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      width: 90vw;
+      height: 40vw;
+      pointer-events: none;
+    }
+    /* Ao passar o mouse sobre a área, as referências aparecem */
+    .hover-container:hover .references {
+      opacity: 1;
+      transform: translate(0, 0);
+      pointer-events: auto;
+    }
+    /* Estilo para cada artigo de referência */
+    .references article {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      position: relative;
+    }
+    .references article img {
+      max-width: 100%;
+      max-height: 100%;
+/*      width: 80px;
+      height:100px;*/
+      object-fit: cover;
+      object-fit: contain;
+    }
+    /* Certifique-se de que o container seja posicionado relativamente */
+    .reference-item {
+      position: relative;
+    }
+    /* Estilização do tooltip, centralizado no container */
+    .reference-label {
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 4px;
+      white-space: nowrap;
+      font-size: 14px;
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 9999; /* para garantir que fique acima de outros elementos */
+    }
+
+    /* Exibe o tooltip ao passar o mouse sobre o <article> */
+    .references article:hover .reference-label {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%);
+    }
+/* Grid responsivo de cards */
+/* Container geral do carrossel com largura fixa */
+.carousel-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  width: 1000px;  /* Ajuste para exibir apenas 3 cards */
+  margin: 0 auto; /* Centraliza na página, se desejar */
+}
+
+/* Botões de navegação */
+.nav-button {
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 18px;
+}
+
+.nav-button:hover {
+  background-color: #0056b3;
+}
+
+/* Container do carrossel (scrollable) */
+.carousel {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;         /* Habilita o scroll horizontal */
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 0;
+  /* Definindo a largura igual ao container pai para forçar o 'crop' */
+  width: 100%;
+}
+
+/* Cada card */
+.card {
+  flex: 0 0 auto;
+  width: 240px;        /* Largura fixa para cada card */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  scroll-snap-align: start;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+  display: block;          /* Remove espaçamentos em linha (inline) */
+  margin: 0 auto;          /* Centraliza horizontalmente */
+  width: 100%;             /* Faz a imagem ocupar toda a largura disponível no card */
+  height: auto;            /* Mantém a proporção */
+  object-fit: contain;     /* Garante que não corte a imagem */
+  /* Se quiser limitar a altura e manter proporção, use max-height */
+  /* max-height: 250px; */
+}
+
+
+
+.company-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 12px;
+  background-color: #007BFF;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.company-link:hover {
+  background-color: #0056b3;
+}
+
+
+  </style>
+</head>
+<body>
+  <!-- Container que engloba a região de hover e as referências -->
+  <div class="hover-container">
+    <!-- Região triangular com background purple e o texto "Referências" -->
+    <div class="hover-trigger">
+      <span class="hover-text">Referências</span>
+    </div>
+    <!-- Seção de referências (aparece com animação ao hover) -->
+    <div class="references">
+      <article>
+        <a href="https://www.nature.com/articles/s41586-025-08737-1.pdf" target="_blank">
+          <img src="static/ref01.png" alt="Referência 1">
+          <span class="reference-label"><b>Nature: Certified Randomness</b> Using <br>A Trapped-Ion Quantum Processor</span>
+        </a>
+      </article>
+      <article>
+        <a href="https://teses.usp.br/teses/disponiveis/43/43133/tde-22062012-154558/publico/45405Coutinho.pdf" target="_blank">
+          <img src="static/ref02.png" alt="Referência 2">
+          <span class="reference-label"><b>USP:</b> Profa. Kaline Coutinho - <br><b>Sessão 2.3.5 Gerador de Números Aleatórios</b></span>
+        </a>
+      </article>
+      <article>
+        <a href="https://link.springer.com/book/10.1007/978-1-4842-9991-3" target="_blank">
+          <img src="static/ref03.png" alt="Referência 3">
+          <span class="reference-label"><b>Springer: </b><b>Sessão 5.1 Quantum Random Number Generation</b></span>
+        </a>
+      </article>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="main-content">
+      <h1>Batalha Naval Quântica</h1>
+      <div class="backend-list">
+        <h2>Escolha o Backend AWS:</h2>
+<!--         <img id="img-iqm" src="static/aws-iqm.jpg" alt="AWS IQM" onclick="selecionarBackend('iqm')">
+        <img id="img-rigetti" src="static/aws-rigetti.jpg" alt="AWS Rigetti" onclick="selecionarBackend('rigetti')">
+        <img id="img-quera" src="static/aws-quera.jpg" alt="AWS QuEra" onclick="selecionarBackend('quera')">
+        <img id="img-ionq" src="static/aws-ionq.png" alt="AWS IonQ" onclick="selecionarBackend('ionq')"> -->
+
+        <div class="carousel-container">
+          <button id="prev" class="nav-button">◀</button>
+          <div class="carousel">
+            <div class="card">
+              <!-- Conteúdo do card 1 -->
+              <img src="static/aws-iqm.jpg" alt="Garnet">
+              <h3>Garnet</h3>
+              <p>Hardware de alta performance para simulações quânticas.</p>
+              <a class="company-link" href="https://aws.amazon.com/pt/braket/quantum-computers/iqm/" target="_blank">IQM</a>
+            </div>
+            <div class="card">
+              <!-- Conteúdo do card 2 -->
+              <img src="static/aws-quera.jpg" alt="Aquila">
+              <h3>Aquila</h3>
+              <p>Design inovador com ótimo desempenho em algoritmos quânticos.</p>
+              <a class="company-link" href="https://www.empresaB.com" target="_blank">QuEra</a>
+            </div>
+            <div class="card">
+              <!-- Conteúdo do card 2 -->
+              <img src="static/aws-rigetti.jpg" alt="Ankaa-3">
+              <h3>Ankaa-3</h3>
+              <p>Design inovador com ótimo desempenho em algoritmos quânticos.</p>
+              <a class="company-link" href="https://aws.amazon.com/pt/braket/quantum-computers/rigetti/" target="_blank">Rigetti</a>
+            </div>
+            <!-- Adicione outros cards conforme necessário -->
+            <div class="card">
+              <!-- Conteúdo do card 2 -->
+              <img src="static/aws-ionq.png" alt="Aria 2">
+              <h3>Aria 2</h3>
+              <p>Design inovador com ótimo desempenho em algoritmos quânticos.</p>
+              <a class="company-link" href="https://aws.amazon.com/pt/braket/quantum-computers/ionq/" target="_blank">IonQ</a>
+            </div>
+            <div class="card">
+              <!-- Conteúdo do card 2 -->
+              <img src="static/aws-ionq.png" alt="Forte 1">
+              <h3>Forte 1</h3>
+              <p>Design inovador com ótimo desempenho em algoritmos quânticos.</p>
+              <a class="company-link" href="https://aws.amazon.com/pt/braket/quantum-computers/ionq/" target="_blank">IonQ</a>
+            </div>
+          </div>
+          <button id="next" class="nav-button">▶</button>
+        </div>
+      </div>
+
+      <div class="top-section">
+        <div id="tabuleiroInputContainer" style="margin-top: 10px;">
+          <label for="tamanhoTabuleiro">Escolha o tamanho do tabuleiro:</label>
+          <select id="tamanhoTabuleiro" name="tamanhoTabuleiro">
+            <!-- Gerando as opções dinamicamente de 5 a 20 -->
+            <script>
+              for (let i = 5; i <= 20; i++) {
+                let option = document.createElement('option');
+                option.value = i;
+                option.textContent = `${i}x${i}`;
+                document.getElementById('tamanhoTabuleiro').appendChild(option);
+                if (i === 10) {
+                  option.selected = true;
+                }
+              }
+            </script>
+          </select>
+        </div>
+        <label for="numNavios">Escolha o número de navios:</label>
+        <select id="numNavios" name="numNavios">
+          <option value="1">1 navio</option>
+          <option value="2">2 navios</option>
+          <option value="3">3 navios</option>
+          <option value="4" selected>4 navios</option>
+          <option value="5">5 navios</option>
+          <option value="6">6 navios</option>
+          <option value="7">7 navios</option>
+          <option value="8">8 navios</option>
+          <option value="9">9 navios</option>
+          <option value="10">10 navios</option>
+          <option value="10">11 navios</option>
+          <option value="10">12 navios</option>
+        </select>
+        <!-- Seção de seleção de tamanho do tabuleiro -->
+        <div id="nameInputContainer" style="display: none; margin-top: 10px;">
+          <input type="text" id="playerName" placeholder="Digite seu nome">
+          <button onclick="confirmarNomeJogador()">Confirmar Nome</button>
+        </div>
+        <div>
+          <div id="statusBar" style="margin-top: 10px; font-weight: bold;"></div>
+          <div id="vez-indicador" class="vez-status">⏳</div>
+        </div>
+        <div class="action-buttons">
+          <button id="startButton" onclick="solicitarNome()">Iniciar Jogo</button>
+          <button id="endButton" onclick="encerrarJogo()" disabled>Encerrar Jogo</button>
+          <button id="waitButton" onclick="entrarNaFila()" disabled>Entrar na Fila</button>
+        </div>
+      </div>
+      <div class="boards">
+        <div class="tabuleiro-jogador">
+          <h2>Seu Tabuleiro</h2>
+        </div>
+        <div class="tabuleiro-computador">
+          <h2>Tabuleiro do Adversário</h2>
+        </div>
+      </div>
+      <div class="attack-controls" style="margin-top: 30px;">
+        <input type="text" id="playerMove" placeholder="Digite a coordenada (ex: A5)" style="padding: 10px; font-size: 16px; width: 200px;">
+        <button onclick="atacar()">Atacar</button>
+      </div>
+    </div>
+    <div class="ranking-espera-wrapper">
+      <div id="ranking" class="painel-box">
+        <h3>Ranking dos Jogadores</h3>
+        <ol id="rankingList"></ol>
+      </div>
+      <div id="filaEspera" class="painel-box">
+        <h3>Fila de Espera</h3>
+        <ul id="esperaList"></ul>
+      </div>
+    </div>
+  </div>
+      <script type="text/javascript">
+    const prevButton = document.getElementById('prev');
+const nextButton = document.getElementById('next');
+const carousel = document.querySelector('.carousel');
+
+prevButton.addEventListener('click', () => {
+  // Subtrai um valor do scroll horizontal (ajuste se necessário)
+  carousel.scrollBy({ left: -300, behavior: 'smooth' });
+});
+
+nextButton.addEventListener('click', () => {
+  // Adiciona um valor ao scroll horizontal (ajuste se necessário)
+  carousel.scrollBy({ left: 300, behavior: 'smooth' });
+});
+
+  </script>
+</body>
+</html>
