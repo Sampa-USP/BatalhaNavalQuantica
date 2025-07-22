@@ -34,5 +34,5 @@ jobs:
             cd ~/app
             docker stop flask-app || true
             docker rm flask-app || true
-            docker build -t flask-app .
-            docker run -d -p 80:5000 --name flask-app flask-app
+            sudo docker build -t flask-app .
+            sudo docker run -d -p 80:5000 --name flask-app flask-app
