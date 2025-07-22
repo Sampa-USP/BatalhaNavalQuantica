@@ -142,4 +142,4 @@ def estado():
     return jsonify({"ranking": ranking, "fila_espera": fila_espera})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=4587)
+    app.run(host="0.0.0.0", port=5000)
