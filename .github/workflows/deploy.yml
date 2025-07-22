@@ -37,7 +37,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             sudo rm -rf ~/app
-            mv ~/app-temp ~/app
+            mv ~/app-temp/app ~/app
             cd ~/app
             sudo docker stop flask-app || true
             sudo docker rm flask-app || true
