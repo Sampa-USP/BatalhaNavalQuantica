@@ -53,8 +53,25 @@
     background-color: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     scroll-snap-align: start;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: opacity 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    /* opacity: 0.5; */
 }
+
+.card:not(.selecionado):not(.modo-selecao-ativo) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modo-selecao-ativo .card:not(.selecionado) {
+    opacity: 0.4;
+}
+
+/* 
+.card.selected {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+} */
 
 .card:hover {
     transform: translateY(-5px);
