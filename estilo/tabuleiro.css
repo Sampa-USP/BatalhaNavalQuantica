@@ -1,6 +1,7 @@
 .boards {
     display: flex;
     gap: 20px;
+    justify-content: center;
 }
 
 .linha {

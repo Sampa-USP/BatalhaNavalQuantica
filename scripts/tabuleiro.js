@@ -42,29 +42,47 @@ function renderizarTabuleiro(containerElement, tamanho, idTabuleiro) {
         containerElement.appendChild(linha);
     }
 
-    function mostrarConsentimento() {
-        document.getElementById("consentimentoModal").style.display = "flex";
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const playerBoard = document.getElementById('playerBoard');
-        const computerBoard = document.getElementById('computerBoard');
-        const tamanhoSelect = document.getElementById('tamanhoTabuleiro');
-        const boardsContainer = document.querySelector('.boards'); // Container que envolve ambos os tabuleiros
-
-        tamanhoSelect.addEventListener('change', function () {
-            const tamanho = parseInt(this.value);
-            const containerJogador = document.querySelector('.tabuleiro-jogador');
-            const containerComputador = document.querySelector('.tabuleiro-computador');
-
-            renderizarTabuleiro(containerJogador, tamanho, 'playerBoard');
-            renderizarTabuleiro(containerComputador, tamanho, 'computerBoard');
-
-            // Calcula o tamanho total do tabuleiro (supondo 40px por célula)
-            const boardSize = tamanho * 40;
-            // Define um gap proporcional (por exemplo, 10% do tamanho do tabuleiro)
-            const gap = boardSize * 0.1;
-            boardsContainer.style.gap = gap + 'px';
-        });
-    });
+    // function mostrarConsentimento() {
+    //     document.getElementById("consentimentoModal").style.display = "flex";
+    // }   
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const playerBoard = document.getElementById('playerBoard');
+    const computerBoard = document.getElementById('computerBoard');
+    const tamanhoSelect = document.getElementById('tamanhoTabuleiro');
+    const boardsContainer = document.querySelector('.boards'); // Container que envolve ambos os tabuleiros
+
+    tamanhoSelect.addEventListener('change', function () {
+        const tamanho = parseInt(this.value);
+        const containerJogador = document.querySelector('.tabuleiro-jogador');
+        const containerComputador = document.querySelector('.tabuleiro-computador');
+
+        renderizarTabuleiro(containerJogador, tamanho, 'playerBoard');
+        renderizarTabuleiro(containerComputador, tamanho, 'computerBoard');
+
+        // Calcula o tamanho total do tabuleiro (supondo 40px por célula)
+        const boardSize = tamanho * 40;
+        // Define um gap proporcional (por exemplo, 10% do tamanho do tabuleiro)
+        const gap = boardSize * 0.1;
+        boardsContainer.style.gap = gap + 'px';
+    });
+});
+
+const tamanhoSelect = document.getElementById('tamanhoTabuleiro');
+const boardsContainer = document.querySelector('.boards'); // Container que envolve ambos os tabuleiros
+
+tamanhoSelect.addEventListener('change', function () {
+    const tamanho = parseInt(this.value);
+    const containerJogador = document.querySelector('.tabuleiro-jogador');
+    const containerComputador = document.querySelector('.tabuleiro-computador');
+
+    renderizarTabuleiro(containerJogador, tamanho, 'playerBoard');
+    renderizarTabuleiro(containerComputador, tamanho, 'computerBoard');
+
+    // Calcula o tamanho total do tabuleiro (supondo 40px por célula)
+    const boardSize = tamanho * 40;
+    // Define um gap proporcional (por exemplo, 10% do tamanho do tabuleiro)
+    const gap = boardSize * 0.1;
+    boardsContainer.style.gap = gap + 'px';
+});
