@@ -15,3 +15,12 @@ function atualizarVez(vezDoJogador) {
         vezDiv.className = "vez-status vez-computador";
     }
 }
+
+function limparStatusBarEVezJogador() {
+    const barra = document.getElementById('statusBar');
+    barra.innerText = "";
+
+    const vezDiv = document.getElementById("vez-indicador");
+    vezDiv.innerHTML = "⏳";
+    vezDiv.className = "vez-status";
+}

@@ -12,13 +12,6 @@ nextButton.addEventListener('click', () => {
     carousel.scrollBy({ left: 300, behavior: 'smooth' });
 });
 
-// document.querySelectorAll('.card').forEach(card => {
-//     card.addEventListener('click', () => {
-//         document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
-//         card.classList.add('selected');
-//     });
-// });
-
 document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('click', () => {
         const carousel = document.querySelector('.carousel');

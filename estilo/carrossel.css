@@ -66,13 +66,6 @@
     opacity: 0.4;
 }
 
-/* 
-.card.selected {
-    opacity: 1;
-    transform: scale(1.02);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
-} */
-
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);

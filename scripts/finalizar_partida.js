@@ -15,7 +15,12 @@ function encerrarJogo() {
             document.getElementById('startButton').disabled = false;
             document.getElementById('waitButton').disabled = true;
             document.getElementById('endButton').disabled = true;
+
             atualizarStatusBar("");
+
+            // Limpa barra de status e vez do jogador
+            limparStatusBarEVezJogador();
+
             // Limpa nome jogador
             const nomeInput = document.getElementById('nomeJogadorInput');
             if (nomeInput) nomeInput.value = "";

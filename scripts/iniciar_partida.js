@@ -34,6 +34,7 @@ function iniciarJogo(nome) {
             document.getElementById('startButton').disabled = true;
             document.getElementById('waitButton').disabled = false;
             document.getElementById('endButton').disabled = false;
+            atualizarVez(true)
             desenharNavios(data.tabuleiro_jogador)
             atualizarRanking(data.ranking);
             atualizarFila(data.fila_espera);
