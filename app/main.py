@@ -82,7 +82,7 @@ def gerar_jogadas_quanticas(n=100):
     return [f"{random.choice(letras)}{random.randint(1, 10)}" for _ in range(n)]
 
 def coord_para_letra_numero(linha, coluna):
-    return f"{chr(ord('A') + int(coluna))}{linha + 1}"
+    return f"{chr(ord('A') + int(linha))}{coluna + 1}"
 
 # === ROTAS ===
 @app.route("/iniciar_jogo", methods=["POST"])
@@ -142,4 +142,4 @@ def estado():
     return jsonify({"ranking": ranking, "fila_espera": fila_espera})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=4879)

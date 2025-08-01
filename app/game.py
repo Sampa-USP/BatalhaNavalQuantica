@@ -20,7 +20,13 @@ class Jogo:
             "dirac", "hilbert", "boltzmann", "feynman", "noether",
             "pauli", "lorentz", "turing", "laplace", "gauss"
         ]
+
         self.codigo_secreto = random.choice(self.codigos_vencedores)
+        print("******************************************************************")
+        print("******************************************************************")
+        print("********************* INICIO DA PARTIDA **************************")
+        print("******************************************************************")
+        print("******************************************************************")
         print(self.codigo_secreto)
 
         self.posicionar_navios(self.tabuleiro_jogador)  # Posicionando navios do jogador
