@@ -1,0 +1,10 @@
+[
+  {
+    "task_id": "arn:aws:braket:us-west-2:123456789012:quantum-task/f96452f1-...",
+    "status": "QUEUED",
+    "hardware": "rigetti_ankaa",
+    "tamanho_tabuleiro": "10x10",
+    "caminho_cache": "data/cache/rigetti_ankaa/10x10.json",
+    "data_disparo": "2025-08-14T12:00:00Z"
+  }
+]

@@ -31,7 +31,7 @@ class Jogo:
 
         self.posicionar_navios(self.tabuleiro_jogador)  # Posicionando navios do jogador
         self.posicionar_navios(self.tabuleiro_quantico)  # Posicionando navios do computador
-        self.gerar_ataques_quanticos()
+        self.gerar_ataques_quanticos(self.tamanho_tabuleiro)
 
 
     def ataque_jogador(self, coordenada):
@@ -181,7 +181,7 @@ class Jogo:
                 if self.tabuleiro_quantico[x][y] == 1:
                     self.tabuleiro_quantico[x][y] = 2
 
-    def gerar_ataques_quanticos(self, quantidade=100):
+    def gerar_ataques_quanticos(self, tamanho_tabuleiro, quantidade=100):
         letras = 'ABCDEFGHIJ'
         jogadas = [f"{random.choice(letras)}{random.randint(1, 10)}" for _ in range(quantidade)]
         self.pilha_ataques_quanticos = jogadas

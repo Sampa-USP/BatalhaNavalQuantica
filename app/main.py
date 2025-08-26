@@ -1,3 +1,7 @@
+import time
+import logging
+import GerenciadorDeCache, iniciar_gerenciador_em_background, verificar_e_processar_tarefas, setup_logging
+
 from flask import Flask, request, jsonify
 from logging_utils import log_request_response
 from game import Jogo
@@ -142,4 +146,11 @@ def estado():
     return jsonify({"ranking": ranking, "fila_espera": fila_espera})
 
 if __name__ == "__main__":
+    setup_logging()
+    logger = logging.getLogger(__name__)
+
+    iniciar_gerenciador_em_background(GerenciadorDeCache())
+    logger.info("O serviço de gerenciamento de cache foi iniciado.")
+
+    logger.info("Iniciando o servidor web...")
     app.run(host="0.0.0.0", port=5000)
