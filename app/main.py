@@ -153,4 +153,4 @@ if __name__ == "__main__":
     logger.info("O serviço de gerenciamento de cache foi iniciado.")
 
     logger.info("Iniciando o servidor web...")
-    app.run(host="0.0.0.0", port=4789)
+    app.run(host="0.0.0.0", port=5000)
