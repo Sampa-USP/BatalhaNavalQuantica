@@ -3,15 +3,11 @@ let placar = {
     computador: 0
 };
 
-function consentimento() {
-
-    document.getElementById("consentimentoModal").style.display = "flex";
-}
-
 function iniciarJogo(nome) {
 
     const numNavios = parseInt(document.getElementById("numNavios").value);
     const tamanhoTabuleiro = parseInt(document.getElementById("tamanhoTabuleiro").value);
+    const backendSelecionado = document.querySelector('.card.selecionado');
     const input = document.getElementById("playerMove");
 
     logBloco("🚀 Enviando dados para iniciar o jogo", {
