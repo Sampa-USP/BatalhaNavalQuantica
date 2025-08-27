@@ -3,57 +3,12 @@ import os
 import random
 import logging
 from datetime import datetime
-from braket.aws import AwsDevice, AwsSession # Suas importações
-from braket.circuits import Circuit
+from aws_quantum_api import AwsQuantumApi
 
-# Configuração do Logger
-def setup_logging(caminho_base="data"):
-    log_dir = os.path.join(caminho_base, "logs")
-    os.makedirs(log_dir, exist_ok=True)
-    log_file = os.path.join(log_dir, "app.log")
-    
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler(log_file),
-            logging.StreamHandler() # Opcional: para continuar exibindo logs no console
-        ]
-    )
-
-logger = logging.getLogger(__name__)
-
-# --- Lógica de Execução do Job Quântico (Placeholder) ---
-def _executar_quantum_job(hardware, tamanho_tabuleiro, shots=1):
-    logger.info(f"Disparando job quântico para {hardware} - tabuleiro {tamanho_tabuleiro}...")
-    
-    num_bits = 10 
-    bit_string = ''.join(random.choice('01') for _ in range(num_bits))
-    
-    x = random.randint(1, 10)
-    y = random.randint(1, 10)
-    
-    nova_jogada = {
-        "id_partida": f"partida_{datetime.now().strftime('%Y%m%d%H%M%S')}_{random.randint(100, 999)}",
-        "data": datetime.now().isoformat(),
-        "hardware": hardware,
-        "tamanho_tabuleiro": tamanho_tabuleiro,
-        "dados_randomicos_gerados": [{
-            "bit_string": bit_string,
-            "coordenada": {"x": x, "y": y}
-        }]
-    }
-    
-    logger.info(f"Job concluído. Nova jogada gerada: {nova_jogada['dados_randomicos_gerados'][0]}")
-    return nova_jogada
-
-class GerenciadorDeCache:
+class CacheManager:
     def __init__(self, caminho_base="data"):
         self.caminho_base = caminho_base
         self.caminho_tasks = os.path.join(caminho_base, "pending_tasks.json")
-        # Configuração da sessão AWS, como no seu código
-        self.boto_session = None # Substituir por Session(profile_name='braket')
-        self.aws_session = None # Substituir por AwsSession(boto_session=self.boto_session)
 
     def _pegar_caminho_cache(self, hardware, tamanho_tabuleiro):
         return os.path.join(self.caminho_base, "cache", hardware, f"{tamanho_tabuleiro}.json")

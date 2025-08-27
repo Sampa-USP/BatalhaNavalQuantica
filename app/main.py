@@ -1,6 +1,6 @@
 import time
 import logging
-import GerenciadorDeCache, iniciar_gerenciador_em_background, verificar_e_processar_tarefas, setup_logging
+from quantum_task import QuantumTask
 
 from flask import Flask, request, jsonify
 from logging_utils import log_request_response
@@ -99,7 +99,7 @@ def iniciar_jogo():
 
     if tamanho_tabuleiro < 5 or tamanho_tabuleiro > 20:
         return jsonify({mensagem: "Tamanho do tabuleiro inválido."})
-
+    breakpoint()
     game = Jogo(tamanho_tabuleiro=tamanho_tabuleiro, num_navios=num_navios)
     jogo_ativo["em_andamento"] = True
     jogo_ativo["jogador"] = dados.get("nome")
@@ -146,11 +146,11 @@ def estado():
     return jsonify({"ranking": ranking, "fila_espera": fila_espera})
 
 if __name__ == "__main__":
-    setup_logging()
+    # setup_logging()
     logger = logging.getLogger(__name__)
 
-    iniciar_gerenciador_em_background(GerenciadorDeCache())
+    gerenciador_cache = QuantumTask.iniciar_em_background()
     logger.info("O serviço de gerenciamento de cache foi iniciado.")
 
     logger.info("Iniciando o servidor web...")
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=4789)

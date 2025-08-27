@@ -1,7 +1,9 @@
 import random
+from quantum_task import QuantumTask
 
 class Jogo:
     def __init__(self, tamanho_tabuleiro=10, num_navios=4):
+        self.quantum_task = QuantumTask()
         self.tamanho_maximo = 20  # Tamanho máximo permitido para o tabuleiro
         if tamanho_tabuleiro > self.tamanho_maximo:
             print(f"⚠️ Alerta: O tamanho máximo do tabuleiro é {self.tamanho_maximo}x{self.tamanho_maximo}.")
@@ -181,10 +183,14 @@ class Jogo:
                 if self.tabuleiro_quantico[x][y] == 1:
                     self.tabuleiro_quantico[x][y] = 2
 
-    def gerar_ataques_quanticos(self, tamanho_tabuleiro, quantidade=100):
+    def gerar_ataques_quanticos(self, hardware, tamanho_tabuleiro):
+        jogadas = self.quantum_task.get_and_replenish_jogada(hardware, tamanho_tabuleiro)
+        print(jogadas)
+        
         letras = 'ABCDEFGHIJ'
         jogadas = [f"{random.choice(letras)}{random.randint(1, 10)}" for _ in range(quantidade)]
         self.pilha_ataques_quanticos = jogadas
+        print(jogadas)
 
     def verificar_condicao_finalizacao(self, tabuleiro):
         # Verifica se todos os navios foram afundados
